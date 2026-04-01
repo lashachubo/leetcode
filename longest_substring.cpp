@@ -3,29 +3,20 @@
 
 int find_substring(std::string str){
   if(str.empty()) return 0;
-  char* head = &str[0];
-  char* tail = &str[0];
-  int curr {1};
-  int len {1};
-  std::set<char> set;
+  int head {0}, curr {0}, len {0};
+  std::set<char> seen;
 
-  set.insert(*tail);
-  
-  while(tail != str.data() + str.size() - 1){
-    tail++;
-    
-    while(set.count(*tail)){
-      set.erase(*head);
-      head++;
+  for(size_t tail {0}; tail < str.size(); tail++){
+    while(seen.count(str[tail])){
+      seen.erase(str[head]);
+      head++; 
       curr--;
     }
-    
-    curr++;  
-    set.insert(*tail);
+    seen.insert(str[tail]);
+    curr++;
     if(curr > len) len = curr;
   }
-
-  std::cout << len << "\n";
+  std::cout << len;
   return len;
 }
 
